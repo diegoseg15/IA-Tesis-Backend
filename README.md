@@ -1,4 +1,4 @@
-# Backend Node JS
+# Backend IA Node JS
 
 Este proyecto incluye un servidor Express que actúa como intermediario entre la aplicación React y las API de OpenAI. A continuación, se presenta una descripción de los archivos relacionados con el servidor y las rutas de la API.
 
