@@ -1,0 +1,21 @@
+{
+  "name": "tesis-backend",
+  "version": "1.0.0",
+  "description": "Backend del robot DORIS",
+  "main": "index.js",
+  "author": "Diego Fernando Segovia Escobar",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1",
+    "openai": "^4.19.0",
+    "path": "^0.12.7",
+    "url": "^0.11.3"
+  },
+  "scripts": {
+    "start": "nodemon src/index.js"
+  }
+}
