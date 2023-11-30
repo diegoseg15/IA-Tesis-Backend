@@ -18,23 +18,31 @@ export const whisperTranscription = (req, res) => {
     if (base64Audio) {
       base64ToAudioAndUpload(res, base64Audio)
         .then(async (response) => {
-          // console.log(response);
-          const transcription = await openai.audio.transcriptions.create({
-            file: fs.createReadStream(response),
-            model: "whisper-1",
-          });
-          res.status(200).json(transcription);
+          try {
+            const transcription = await openai.audio.transcriptions.create({
+              file: fs.createReadStream(response),
+              model: "whisper-1",
+            });
+            res.status(200).json(transcription);
+          } catch (transcriptionErr) {
+            console.error(transcriptionErr);
+            res.status(500).json({ error: "Error al transcribir el audio" });
+          }
         })
-        .catch((err) => {
-          res.status(400).json({ error: "Error al buscar el archivo" });
+        .catch((uploadErr) => {
+          console.error(uploadErr);
+          res
+            .status(400)
+            .json({ error: "Error al procesar el archivo de audio" });
         });
     } else {
-      res.status(400).json({ error: "No se envio un audio" });
+      res.status(400).json({ error: "No se envió un archivo de audio válido" });
     }
   } catch (err) {
-    // Manejar errores que puedan ocurrir al llamar a base64ToAudioAndUpload
     console.error(err);
-    res.status(500).json({ error: "Internal server error" });
+    res
+      .status(500)
+      .json({ error: "Error interno del servidor al procesar el audio" });
   }
 };
 

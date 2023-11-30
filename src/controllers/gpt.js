@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import dotenv from "dotenv";
+import { countSyllables } from "./syllableCounter.js";
 
 dotenv.config({ path: "./.env" });
 
@@ -23,7 +24,7 @@ export const gpt = async (req, res) => {
 
     res.status(200).json({
       text: completion.choices[0].message.content.toString(),
-      words: completion.choices[0].message.content.toString().split(" ").length,
+      // syllable: completion.choices[0].message.content.toString(),
       length: completion.choices[0].message.content.toString().length,
     });
   } catch (error) {
