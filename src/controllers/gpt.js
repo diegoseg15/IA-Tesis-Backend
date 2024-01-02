@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import dotenv from "dotenv";
 import { countSyllables } from "./syllableCounter.js";
+import fs from "fs";
 
 dotenv.config({ path: "./.env" });
 
