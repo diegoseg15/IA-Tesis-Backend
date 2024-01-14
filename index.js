@@ -34,11 +34,13 @@ app.use((req, res, next) => {
 const board = new five.Board();
 
 // Inicializa los servomotores
-let servoBoca;
+let servoBoca, servoCabeza, servoCuello;
 
 board.on("ready", () => {
   try {
-    servoBoca = new five.Servo({ pin: 6, startAt: 0, range: [0, 45] });
+    servoBoca = new five.Servo({ pin: 9, startAt: 135, range: [0, 135] });
+    servoCabeza = new five.Servo({ pin: 10, startAt: 150, range: [0, 150] });
+    servoCuello = new five.Servo({ pin: 6, startAt: 50, range: [0, 150] });
     console.log("Arduino board is ready!");
   } catch (error) {
     console.error("Error al inicializar el servo:", error);
@@ -66,7 +68,6 @@ app.post(`/api/${process.env.API_VERSION}/boca`, async (req, res) => {
     // Utiliza un bucle for...of para garantizar la sincronización
     for (const palabra of palabras) {
       // Mueve el servo a la posición 40 durante el tiempo disponible para cada palabra
-      console.log("Moviendo servo a la posición 40 para la palabra:", palabra);
       servoBoca.to(45, tiempoPorPalabra);
 
       // Calcula el tiempo restante después del movimiento del servo
@@ -79,12 +80,10 @@ app.post(`/api/${process.env.API_VERSION}/boca`, async (req, res) => {
       const duracionEspera = Math.min(tiempoRestante, 235);
 
       // Espera el tiempo calculado
-      console.log(`Esperando ${duracionEspera} milisegundos...`);
       await new Promise((resolve) => setTimeout(resolve, duracionEspera));
 
       // Mueve el servo a la posición 10 durante el tiempo disponible para cada palabra
-      console.log("Moviendo servo a la posición 10");
-      servoBoca.to(0, tiempoPorPalabra);
+      servoBoca.to(135, tiempoPorPalabra);
 
       // Calcula el tiempo restante después del segundo movimiento del servo
       const tiempoRestanteDespuesMovimiento = Math.max(
@@ -99,9 +98,6 @@ app.post(`/api/${process.env.API_VERSION}/boca`, async (req, res) => {
       );
 
       // Espera el tiempo calculado después del segundo movimiento del servo
-      console.log(
-        `Esperando ${duracionEsperaDespuesMovimiento} milisegundos...`
-      );
       await new Promise((resolve) =>
         setTimeout(resolve, duracionEsperaDespuesMovimiento)
       );
@@ -112,6 +108,53 @@ app.post(`/api/${process.env.API_VERSION}/boca`, async (req, res) => {
   } catch (err) {
     // Manejo de errores: Envía un mensaje de error al cliente
     res.status(400).send("Error al mover la boca: " + err.message);
+  }
+});
+
+const MOVIMIENTO_ARRIBA = "arriba";
+const MOVIMIENTO_ABAJO = "abajo";
+const MOVIMIENTO_IZQUIERDA = "izquierda";
+const MOVIMIENTO_DERECHA = "derecha";
+const MOVIMIENTO_INICIAL = "inicio";
+
+app.post(`/api/${process.env.API_VERSION}/cabeza`, async (req, res) => {
+  try {
+    const instruction = req.body;
+    let servo, angle;
+
+    // Verifica si el servo está definido
+    if (!servoCabeza && !servoCuello) {
+      throw new Error("El servo no está inicializado correctamente.");
+    }
+
+    if (
+      instruction.movimiento === MOVIMIENTO_ARRIBA ||
+      instruction.movimiento === MOVIMIENTO_ABAJO
+    ) {
+      servoCuello.to(50, 100);
+      servo = servoCabeza;
+      angle = instruction.movimiento === MOVIMIENTO_ARRIBA ? 0 : 150;
+      servo.to(angle, 100);
+    } else if (
+      instruction.movimiento === MOVIMIENTO_IZQUIERDA ||
+      instruction.movimiento === MOVIMIENTO_DERECHA
+    ) {
+      servo = servoCuello;
+      angle = instruction.movimiento === MOVIMIENTO_DERECHA ? 0 : 150;
+      servo.to(angle, 100);
+    } else if (instruction.movimiento === MOVIMIENTO_INICIAL) {
+      servoCuello.to(50, 100);
+      servo = servoCabeza.to(50, 100);
+    } else {
+      throw new Error("Movimiento no válido.");
+    }
+
+    res.status(200).send({
+      mensaje: `Movimiento de la cabeza hacia ${instruction.movimiento} completado`,
+    });
+  } catch (err) {
+    // Manejo de errores: Envía un mensaje de error al cliente
+    res.status(400).send("Error al mover la cabeza: " + err.message);
   }
 });
 

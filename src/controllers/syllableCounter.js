@@ -1,42 +1,58 @@
+// Función para contar las sílabas en una oración
 export function countSyllables(sentence) {
-    // Convert the sentence to lowercase for consistent handling
-    sentence = sentence.toLowerCase();
+  // Convertir la oración a minúsculas para un manejo consistente
+  sentence = sentence.toLowerCase();
 
-    // Remove punctuation and whitespace
-    sentence = sentence.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\s]/g, '');
+  // Eliminar puntuación y espacios en blanco
+  sentence = sentence.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\s]/g, "");
 
-    // Define vowels and combinations of letters that can form syllables
-    const vowels = 'aeiouáéíóú';
-    const vowelCombinations = ['ai', 'ei', 'oi', 'au', 'eu', 'ou', 'ia', 'ie', 'io', 'iu', 'ua', 'ue', 'uo'];
+  // Definir vocales y combinaciones de letras que pueden formar sílabas
+  const vowels = "aeiouáéíóú";
+  const vowelCombinations = [
+    "ai",
+    "ei",
+    "oi",
+    "au",
+    "eu",
+    "ou",
+    "ia",
+    "ie",
+    "io",
+    "iu",
+    "ua",
+    "ue",
+    "uo",
+  ];
 
-    // Syllable counter
-    let syllableCount = 0;
+  // Contador de sílabas
+  let syllableCount = 0;
 
-    // Check each letter in the sentence
-    for (let i = 0; i < sentence.length; i++) {
-        const currentLetter = sentence[i];
-        const nextLetter = sentence[i + 1];
+  // Verificar cada letra en la oración
+  for (let i = 0; i < sentence.length; i++) {
+    const currentLetter = sentence[i];
+    const nextLetter = sentence[i + 1];
 
-        // If the current letter is a vowel
-        if (vowels.includes(currentLetter)) {
-            syllableCount++;
+    // Si la letra actual es una vocal
+    if (vowels.includes(currentLetter)) {
+      syllableCount++;
 
-            // If the next letter is also a vowel, subtract 1 to avoid counting twice
-            if (vowels.includes(nextLetter)) {
-                syllableCount--;
-            }
+      // Si la siguiente letra también es una vocal, restar 1 para evitar contar dos veces
+      if (vowels.includes(nextLetter)) {
+        syllableCount--;
+      }
 
-            // If the next letter forms a combination of vowels, subtract 1
-            if (vowelCombinations.includes(currentLetter + nextLetter)) {
-                syllableCount--;
-            }
-        }
+      // Si la siguiente letra forma una combinación de vocales, restar 1
+      if (vowelCombinations.includes(currentLetter + nextLetter)) {
+        syllableCount--;
+      }
     }
+  }
 
-    // Ensure that the count is not negative
-    if (syllableCount < 0) {
-        syllableCount = 0;
-    }
+  // Asegurarse de que el conteo no sea negativo
+  if (syllableCount < 0) {
+    syllableCount = 0;
+  }
 
-    return syllableCount;
+  // Devolver el conteo de sílabas
+  return syllableCount;
 }
