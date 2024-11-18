@@ -47,4 +47,4 @@ Este archivo contiene las funciones relacionadas con las interacciones de Whispe
 
 Este servidor actúa como puente entre la aplicación React y los servicios de OpenAI, permitiendo la comunicación y la ejecución de las funcionalidades específicas del asistente DORIS.
 
-<a src="https://github.com/diegoseg15/IA-Tesis-Frontend">Frontend DORIS</a>
+<a href="https://github.com/diegoseg15/IA-Tesis-Frontend">Ir al Frontend del proyecto</a>
