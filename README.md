@@ -39,3 +39,10 @@ Este archivo contiene las funciones relacionadas con las interacciones de Whispe
 **Nota:** Asegúrate de configurar correctamente las variables de entorno en el archivo `.env` con las claves de API necesarias para OpenAI.
 
 Este servidor actúa como puente entre la aplicación React y los servicios de OpenAI, permitiendo la comunicación y la ejecución de las funcionalidades específicas del asistente DORIS.
+
+## Licencia
+
+Este proyecto es propiedad de **Diego Fernando Segovia Escobar** y la **Pontificia Universidad Católica del Ecuador Sede Ambato (PUCE Ambato)**.  
+Forma parte de la tesis de grado desarrollada para la obtención del título de grado en la PUCE Ambato.
+
+Todos los derechos reservados. No se permite la reproducción, distribución, ni modificación total o parcial sin el consentimiento explícito de los propietarios.
