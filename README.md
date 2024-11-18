@@ -2,6 +2,13 @@
 
 Este proyecto incluye un servidor Express que actúa como intermediario entre la aplicación React y las API de OpenAI. A continuación, se presenta una descripción de los archivos relacionados con el servidor y las rutas de la API.
 
+## Licencia
+
+Este proyecto es propiedad de **Diego Fernando Segovia Escobar** y la **Pontificia Universidad Católica del Ecuador Sede Ambato (PUCE Ambato)**.  
+Forma parte de la tesis de grado desarrollada para la obtención del título de grado en la PUCE Ambato.
+
+Todos los derechos reservados. No se permite la reproducción, distribución, ni modificación total o parcial sin el consentimiento explícito de los propietarios.
+
 ## Archivo `server.js`
 
 El archivo `server.js` contiene la configuración del servidor Express, la configuración CORS, los encabezados HTTP y las rutas para las funcionalidades principales.
@@ -40,9 +47,4 @@ Este archivo contiene las funciones relacionadas con las interacciones de Whispe
 
 Este servidor actúa como puente entre la aplicación React y los servicios de OpenAI, permitiendo la comunicación y la ejecución de las funcionalidades específicas del asistente DORIS.
 
-## Licencia
-
-Este proyecto es propiedad de **Diego Fernando Segovia Escobar** y la **Pontificia Universidad Católica del Ecuador Sede Ambato (PUCE Ambato)**.  
-Forma parte de la tesis de grado desarrollada para la obtención del título de grado en la PUCE Ambato.
-
-Todos los derechos reservados. No se permite la reproducción, distribución, ni modificación total o parcial sin el consentimiento explícito de los propietarios.
+<a src="https://github.com/diegoseg15/IA-Tesis-Frontend">Frontend DORIS</a>
